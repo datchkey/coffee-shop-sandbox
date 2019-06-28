@@ -4,9 +4,13 @@ let configuration = require('../../config/backend-config');
 
 exports.getExampleList = function (request, response) {
 
-  rest.get(configuration.perEnvironment.backendUrl + '/examples').on('success', (backendResponseBody, backendResponseMeta) => {
-    response.json(backendResponseBody);
-  });
+  rest.get(configuration.perEnvironment.backendUrl + '/examples')
+    .on('success', (backendResponseBody, backendResponseMeta) => {
+      response.json(backendResponseBody);
+    })
+    .on('fail', (backendResponseBody, backendResponseMeta) => {
+      response.status(backendResponseMeta.statusCode).send(backendResponseBody);
+    });
 };
 
 exports.getExampleById = function (request, response) {
@@ -14,7 +18,13 @@ exports.getExampleById = function (request, response) {
 
   rest.get(configuration.perEnvironment.backendUrl + '/examples/' + id, (backendResponseBody, backendResponseMeta) => {
     response.json(backendResponseBody);
-  });
+  })
+    .on('success', (backendResponseBody, backendResponseMeta) => {
+      response.json(backendResponseBody);
+    })
+    .on('fail', (backendResponseBody, backendResponseMeta) => {
+      response.status(backendResponseMeta.statusCode).send(backendResponseBody);
+    });
 };
 
 exports.saveExample = function (request, response) {
