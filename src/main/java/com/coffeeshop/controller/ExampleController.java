@@ -1,11 +1,15 @@
 package com.coffeeshop.controller;
 
-import com.coffeeshop.model.entity.Example;
-import com.coffeeshop.model.web.ExampleDto;
-import com.coffeeshop.repository.ExampleRepository;
+import com.coffeeshop.exception.InputValidationException;
+import com.coffeeshop.model.web.example.BaseExampleDto;
+import com.coffeeshop.model.web.example.ExampleDtoRequest;
+import com.coffeeshop.model.web.example.RichExampleDtoResponse;
+import com.coffeeshop.service.ExampleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -13,25 +17,26 @@ import java.util.List;
 public class ExampleController {
 
     @Autowired
-    private ExampleRepository exampleRepository;
+    private ExampleService exampleService;
 
     @GetMapping("/examples")
-    public List<Example> getExamples() {
+    public List<BaseExampleDto> getExamples() {
 
-        return exampleRepository.findAll();
+        return exampleService.findAll();
     }
 
     @PostMapping("/examples")
-    public Example save(@RequestBody ExampleDto exampleDto) {
-        return exampleRepository.save(
-                Example.builder()
-                        .name(exampleDto.getName())
-                        .build());
+    public RichExampleDtoResponse save(@RequestBody @Valid ExampleDtoRequest exampleDtoRequest, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new InputValidationException(result);
+        }
+
+        return exampleService.save(exampleDtoRequest);
     }
 
     @GetMapping("/examples/{id}")
-    public Example getById(@PathVariable("id") Long id) {
-        return exampleRepository.findById(id).orElse(null);
+    public RichExampleDtoResponse getById(@PathVariable("id") Long id) {
+        return exampleService.findById(id);
     }
 
 }

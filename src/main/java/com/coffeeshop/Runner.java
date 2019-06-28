@@ -21,9 +21,15 @@ public class Runner implements CommandLineRunner {
         exampleRepository.saveAll(
                 Stream.of(Example.builder()
                                 .name("Sarah")
+                                .email("sarah@site.com")
+                                .price(100)
+                                .imageUrl("https://www.baeldung.com/wp-content/uploads/2016/05/baeldung-rest-lightbox-main-1.2.0.jpg")
                                 .build(),
                         Example.builder()
                                 .name("David")
+                                .email("david@site.com")
+                                .price(1000)
+                                .imageUrl("https://www.baeldung.com/wp-content/uploads/2016/05/baeldung-rest-lightbox-main-1.2.0.jpg")
                                 .build()
                 )
                         .collect(Collectors.toList()));
