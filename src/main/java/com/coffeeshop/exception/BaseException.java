@@ -1,6 +1,6 @@
 package com.coffeeshop.exception;
 
-import com.coffeeshop.model.web.error.ErrorResponse;
+import com.coffeeshop.model.web.error.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 
 public abstract class BaseException extends RuntimeException {
@@ -12,6 +12,6 @@ public abstract class BaseException extends RuntimeException {
         super(message);
     }
 
-    public abstract ErrorResponse errorResponse();
+    public abstract ErrorResponseDto errorResponse();
     public abstract HttpStatus httpStatus();
 }

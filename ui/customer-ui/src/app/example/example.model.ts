@@ -1,4 +1,4 @@
-export class Example {
+export class ExampleModel {
   private _name: string;
   private _id: number;
 

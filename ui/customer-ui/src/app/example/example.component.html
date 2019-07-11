@@ -1,21 +1,87 @@
 <div class="container">
-  <div class="card-body border-dark"
-       [class.shadow-lg]="isHeaderShadow"
-       [class.alert-primary]="isHeaderShadow">
+  <div class="card-body border-dark">
 
-    <div class="input-group mb-3">
-      <input id="name"
-             [(ngModel)]="exampleName"
-             class="form-control"
-             (keydown.enter)="saveExample(exampleName)"
-             (mouseover)="isHeaderShadow=true"
-             (mouseleave)="isHeaderShadow=false"
-
-      >
-      <div class="input-group-append">
-        <span class="input-group-text" style="cursor: pointer" (click)="saveExample(exampleName)">Add example</span>
+    <form name="form" #formVariable="ngForm" (ngSubmit)="formVariable.form.valid && saveExample(formVariable)" novalidate>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" name="name" [(ngModel)]="currentExample.name" class="form-control" #name="ngModel"
+               [ngClass]="{ 'is-invalid': formVariable.submitted && name.invalid }"
+               minlength="5"
+               maxlength="50"
+               required>
+        <div class="invalid-feedback" *ngIf="formVariable.submitted && name.invalid">
+          <div *ngIf="name.errors?.minlength || name.errors?.maxlength">
+            Name length should be between 5 and 50 characters
+          </div>
+          <div *ngIf="name.errors?.required">
+            Name is required
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" [(ngModel)]="currentExample.email" class="form-control"
+               name="email" #email="ngModel" type="email"
+               [ngClass]="{ 'is-invalid': formVariable.submitted && email.invalid }"
+               minlength="5"
+               maxlength="50"
+               required
+               email>
+        <div class="invalid-feedback" *ngIf="formVariable.submitted && email.invalid">
+          <div *ngIf="email.errors?.required">
+            Email is required
+          </div>
+          <div *ngIf="email.errors?.minlength || email.errors?.maxlength">
+            Email length should be between 5 and 50 characters
+          </div>
+          <div *ngIf="email.errors?.email">
+            Email field should be in email format
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input id="imageUrl" [(ngModel)]="currentExample.imageUrl" class="form-control" name="imageUrl"
+               #imageUrl="ngModel"
+               [ngClass]="{ 'is-invalid': formVariable.submitted && imageUrl.invalid }"
+               required
+               maxlength="200"
+               minlength="20">
+        <div class="invalid-feedback" *ngIf="formVariable.submitted && imageUrl.invalid">
+          <div *ngIf="imageUrl.errors.required">
+            Image URL is required
+          </div>
+          <div *ngIf="imageUrl.errors.minlength || imageUrl.errors.maxlength">
+            Image URL should be between 20 and 200 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input id="price" [(ngModel)]="currentExample.price"
+               type="number" class="form-control" name="price"
+               #price="ngModel"
+               [ngClass]="{'is-invalid' : formVariable.submitted && price.invalid }"
+               numberMax="1000"
+               numberMin="1"
+               required>
+        <div class="invalid-feedback" *ngIf="formVariable.submitted && price.invalid">
+          <div *ngIf="price.errors.required">
+            Price is required
+          </div>
+
+          <div *ngIf="price.errors.numberMin || price.errors.numberMax">
+            Price should be between 1 and 1000
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button class="input-group-text" type="submit">Add example</button>
+      </div>
+    </form>
+
+
   </div>
   <hr>
   <div class="card-body">
@@ -28,10 +94,10 @@
       </thead>
       <tbody>
       <tr *ngFor="let example of examples; let index = index"
-      (mouseover)="tableRowsShadows[index] = true"
-      (mouseleave)="tableRowsShadows[index] = false"
-      [class.shadow-lg]="tableRowsShadows[index]"
-      [class.alert-info]="tableRowsShadows[index]"
+          (mouseover)="tableRowsShadows[index] = true"
+          (mouseleave)="tableRowsShadows[index] = false"
+          [class.alert-info]="tableRowsShadows[index]"
+          [routerLink]="['/examples', example.id]"
       >
         <td>{{example.id}}</td>
         <td>{{example.name}}</td>

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Example} from "../../model/example";
+import {ExampleModel} from "../../example/example.model";
+import {ExampleDetailsModel} from "../../example/example-details/example-details.model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,20 @@ export class ExampleHttpService {
   }
 
   getExamples() {
-    return this.httpClient.get<Example[]>("api/examples");
+    return this.httpClient.get<ExampleModel[]>("api/examples");
   }
 
-  getExamplesById(id: number) {
-    return this.httpClient.get<Example[]>("api/examples/" + id);
+  getExampleById(id: number) {
+    return this.httpClient.get<ExampleDetailsModel>("api/examples/" + id);
   }
 
-  saveExample(name: string) {
-    return this.httpClient.post<Example>('/api/examples', {name: name});
+  saveExample(exampleDetails: ExampleDetailsModel) {
+    let body = {
+      name: exampleDetails.name,
+      imageUrl: exampleDetails.imageUrl,
+      email: exampleDetails.email,
+      price: exampleDetails.price
+    };
+    return this.httpClient.post<ExampleModel>('/api/examples', body);
   }
 }

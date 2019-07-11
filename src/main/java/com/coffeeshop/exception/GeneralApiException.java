@@ -1,11 +1,11 @@
 package com.coffeeshop.exception;
 
-import com.coffeeshop.model.web.error.ErrorResponse;
+import com.coffeeshop.model.web.error.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 
 public class GeneralApiException extends BaseException {
 
-    private static final HttpStatus DEFAULT_HTTP_STATUS = HttpStatus.INTERNAL_SERVER_ERROR;
+    private static final HttpStatus DEFAULT_HTTP_STATUS = HttpStatus.INTERNAL_SERVER_ERROR; //500
 
     public GeneralApiException() {
     }
@@ -15,8 +15,8 @@ public class GeneralApiException extends BaseException {
     }
 
     @Override
-    public ErrorResponse errorResponse() {
-        return ErrorResponse.builder()
+    public ErrorResponseDto errorResponse() {
+        return ErrorResponseDto.builder()
                 .message(this.getMessage())
                 .build();
     }

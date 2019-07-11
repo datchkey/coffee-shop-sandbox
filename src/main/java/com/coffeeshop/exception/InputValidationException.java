@@ -1,6 +1,6 @@
 package com.coffeeshop.exception;
 
-import com.coffeeshop.model.web.error.ErrorResponse;
+import com.coffeeshop.model.web.error.ErrorResponseDto;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -25,9 +25,9 @@ public class InputValidationException extends BaseException {
     }
 
     @Override
-    public ErrorResponse errorResponse() {
+    public ErrorResponseDto errorResponse() {
 
-        return ErrorResponse.builder()
+        return ErrorResponseDto.builder()
                 .message(DEFAULT_MESSAGE)
                 .errors(getErrors())
                 .build();

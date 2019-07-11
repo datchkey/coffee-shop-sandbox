@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const PORT = process.env.PORT || 4200;
-const DIST_FOLDER = __dirname + '/../dist/customer-ui';
+const DIST_FOLDER = __dirname + '/../dist/customer-ui/';
 
 const ngExpressEngine = require('@nguniversal/express-engine').ngExpressEngine;
 app.engine('html', ngExpressEngine({}));
@@ -29,8 +29,6 @@ app.get('/api/examples', routes.api.example.getExampleList);
 app.get('/api/examples/:id', routes.api.example.getExampleById);
 app.post('/api/examples', routes.api.example.saveExample);
 
-
-// All regular routes use the Universal engine
 app.get('*', (req, res) => {
   res.render('index', {req});
 });

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ExampleHttpService} from "../service/http/example-http.service";
-import {Example} from "../model/example";
+import {ExampleModel} from "./example.model";
+import {ExampleDetailsModel} from "./example-details/example-details.model";
 
 @Component({
   selector: 'app-example',
@@ -9,11 +10,9 @@ import {Example} from "../model/example";
 })
 export class ExampleComponent implements OnInit {
 
-  public isHeaderShadow: boolean = false;
   public tableRowsShadows: boolean [] = [];
-
-  public examples: Example[] = [];
-  public exampleName: string;
+  public examples: ExampleModel[] = [];
+  public currentExample: ExampleDetailsModel = new ExampleDetailsModel();
 
   constructor(private exampleHttpService: ExampleHttpService) {
   }
@@ -21,10 +20,11 @@ export class ExampleComponent implements OnInit {
   getExamples() {
     return this.exampleHttpService.getExamples().subscribe(data => this.examples = data);
   }
-  saveExample(exampleName: string) {
-    return this.exampleHttpService.saveExample(exampleName).subscribe(data => {
+  saveExample(f) {
+    return this.exampleHttpService.saveExample(this.currentExample).subscribe(data => {
       this.examples.push(data);
-      this.exampleName = '';
+      this.currentExample = new ExampleDetailsModel();
+      f.submitted = false;
     });
   }
 
