@@ -23,14 +23,14 @@ export class ExampleDetailsComponent implements OnInit {
     this._location.back();
   }
 
-  getExamples() {
+  getExample() {
 
     return this.exampleHttpService.getExampleById(this.id).subscribe(data => this.example = data);
   }
 
 
   ngOnInit() {
-    this.getExamples();
+    this.getExample();
   }
 
 }

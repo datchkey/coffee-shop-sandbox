@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, ElementRef} from '@angular/core';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-root',
@@ -6,8 +7,11 @@ import {AfterViewInit, Component, ElementRef} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
-  constructor(private elementRef: ElementRef) {
 
+  public title = "Coffee-Shop Example Sandbox";
+
+  constructor(private elementRef: ElementRef, public titleService: Title) {
+    this.titleService.setTitle(this.title);
   }
 
   ngAfterViewInit() {

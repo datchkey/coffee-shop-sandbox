@@ -1,7 +1,8 @@
 <div class="container">
   <div class="card-body border-dark">
 
-    <form name="form" #formVariable="ngForm" (ngSubmit)="formVariable.form.valid && saveExample(formVariable)" novalidate>
+    <form name="form" #formVariable="ngForm" (ngSubmit)="formVariable.form.valid && saveExample(formVariable)"
+          novalidate>
       <div class="form-group">
         <label for="name">Name</label>
         <input id="name" name="name" [(ngModel)]="currentExample.name" class="form-control" #name="ngModel"
