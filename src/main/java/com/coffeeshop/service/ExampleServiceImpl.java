@@ -23,7 +23,7 @@ public class ExampleServiceImpl implements ExampleService {
     @Override
     public RichExampleDtoResponse save(ExampleDtoRequest request) {
         Example example = commonConverter.getExampleDtoRequestToExample().convert(request);
-        exampleRepository.save(example);
+        example = exampleRepository.save(example);
         return commonConverter.getExampleToRichExampleDtoConverter().convert(example);
     }
 
@@ -36,6 +36,9 @@ public class ExampleServiceImpl implements ExampleService {
 
     @Override
     public RichExampleDtoResponse findById(Long id) {
+        if (id == null) {
+            return null;
+        }
         Example example = exampleRepository.findById(id).orElse(null);
         if (example == null) {
             return null;

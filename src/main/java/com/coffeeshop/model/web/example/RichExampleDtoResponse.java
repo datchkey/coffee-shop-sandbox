@@ -1,14 +1,12 @@
 package com.coffeeshop.model.web.example;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString
 public class RichExampleDtoResponse {
 
     private Long id;
